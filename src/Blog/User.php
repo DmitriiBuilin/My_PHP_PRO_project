@@ -6,7 +6,7 @@ use GeekBrains\LevelTwo\Person\Name;
 class User
 {
     private int $id;
-    private Name $username;
+    private string $username;
     private string $login;
 
     /**
@@ -14,7 +14,7 @@ class User
      * @param Name $username
      * @param string $login
      */
-    public function __construct(int $id, Name $username, string $login)
+    public function __construct(int $id, string $username, string $login)
     {
         $this->id = $id;
         $this->username = $username;

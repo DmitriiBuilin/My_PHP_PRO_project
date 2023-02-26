@@ -5,10 +5,10 @@ use \DateTimeImmutable;
 
 class Person
 {
-    private Name $name;
+    private string $name;
     private DateTimeImmutable $registeredOn;
 
-    public function __construct(Name $name, DateTimeImmutable $registeredOn) {
+    public function __construct(string $name, DateTimeImmutable $registeredOn) {
         $this->registeredOn = $registeredOn;
         $this->name = $name;
     }

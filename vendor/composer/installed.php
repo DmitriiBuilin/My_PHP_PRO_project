@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'geekbrains/leveltwo',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '81ee123da2ff81b719d9b5664bb5e2aac7d97cd9',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,18 +11,18 @@
     ),
     'versions' => array(
         'fakerphp/faker' => array(
-            'pretty_version' => 'v1.20.0',
-            'version' => '1.20.0.0',
-            'reference' => '37f751c67a5372d4e26353bd9384bc03744ec77b',
+            'pretty_version' => 'v1.21.0',
+            'version' => '1.21.0.0',
+            'reference' => '92efad6a967f0b79c499705c69b662f738cc9e4d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../fakerphp/faker',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'geekbrains/leveltwo' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '81ee123da2ff81b719d9b5664bb5e2aac7d97cd9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -40,7 +40,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '4f051d70956e86d68c2ac3d078b803473c6d9426',
+            'reference' => '6bd8aa4cc5a5871008d89e503ac4ae7b69b5ac33',
             'type' => 'metapackage',
             'install_path' => NULL,
             'aliases' => array(
@@ -49,9 +49,9 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.1.1',
-            'version' => '3.1.1.0',
-            'reference' => '07f1b9cc2ffee6aaafcf4b710fbc38ff736bd918',
+            'pretty_version' => 'v3.2.0',
+            'version' => '3.2.0.0',
+            'reference' => '1ee04c65529dea5d8744774d474e7cbd2f1206d3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
             'aliases' => array(),
