@@ -3,52 +3,62 @@
 namespace GeekBrains\LevelTwo\Blog;
 
 use GeekBrains\LevelTwo\Blog\User;
+use GeekBrains\LevelTwo\Blog\UUID;
 
 class Post
 {
-    private int $id;
-    private User $user;
-    private string $title;
-    private string $text;    
+  
 
     public function __construct(
-        int $id,
-        User $user,
-        string $title,
-        string $text
+        private UUID $uuid,
+        private User $user,
+        private string $title,
+        private string $text,
     )
     {
-        $this->id = $id;
-        $this->user = $user;
-        $this->title = $title;
-        $this->text = $text;        
-        
-        // var_dump($author);
     }
 
-        /**
+    /**
+     * @param UUID $uuid
+     */ 
+    public function getUuid(): UUID
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return self
+     */ 
+    public function setUuid(UUID $uuid): void
+    {
+            $this->uuid = $uuid;
+    }
+
+    /**
      * @param User $user
      */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
     public function setUser(User $user): void
     {
         $this->user = $user;
     }
 
-        /**
+    /**
      * @return string
      */
     public function getTitle(): string
     {
         return $this->title;
     }
-
     /**
      * @param string $title
      */
-    public function setTitle(string $title): Post
+    public function setTitle(string $title): void
     {
         $this->title = $title;
-        return $this;
     }
 
     /**
@@ -58,23 +68,18 @@ class Post
     {
         return $this->text;
     }
-
     /**
      * @param string $text
      */
-    public function setText(string $text): Post
+    public function setText(string $text): void
     {
         $this->text = $text;
-        return $this;
     }
 
     public function __toString()
     {
-        return $this->author . ' пишет: ' . PHP_EOL . '-- ' . $this->title . ' --' . PHP_EOL . $this->text . PHP_EOL;
-    }
-    
-    public function id(): int
-    {
-        return $this->id;
-    }
+        return $this->user . ' пишет: ' . PHP_EOL . '-- ' . $this->title . ' --' . PHP_EOL . $this->text . PHP_EOL;
+    }    
+
+
 }
