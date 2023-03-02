@@ -4,22 +4,23 @@ namespace GeekBrains\LevelTwo\Blog;
 
 use GeekBrains\LevelTwo\Blog\Post;
 use GeekBrains\LevelTwo\Blog\User;
+use GeekBrains\LevelTwo\Blog\UUID;
 
 class Comment
 {
-    private int $id;
+    private UUID $uuid;
     private User $user;
     private Post $post;
     private string $text;
 
     public function __construct(
-        int $id,
+        UUID $uuid,
         User $user,
         Post $post,
         string $text
     )
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
         $this->user = $user;        
         $this->post = $post; 
         $this->text = $text;
@@ -28,17 +29,17 @@ class Comment
         /**
      * @return int
      */
-    public function getId(): int
+    public function getUuid(): UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setUuid(UUID $uuid): void
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -91,6 +92,6 @@ class Comment
     
     public function __toString()
     {
-        return $this->author . ' пишет комментарий к статье №: ' . $this->postId . PHP_EOL . '- ' . $this->text . PHP_EOL;
+        return $this->user->username() . ' пишет комментарий к статье №: ' . $this->postId . PHP_EOL . '- ' . $this->text . PHP_EOL;
     }
 }

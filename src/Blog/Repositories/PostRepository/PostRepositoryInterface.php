@@ -2,7 +2,6 @@
 
 namespace GeekBrains\LevelTwo\Blog\Repositories\PostRepository;
 
-use GeekBrains\LevelTwo\Blog\User;
 use GeekBrains\LevelTwo\Blog\UUID;
 use GeekBrains\LevelTwo\Blog\Post;
 

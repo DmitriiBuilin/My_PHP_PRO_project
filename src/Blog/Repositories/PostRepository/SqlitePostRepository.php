@@ -3,13 +3,10 @@
 namespace GeekBrains\LevelTwo\Blog\Repositories\PostRepository;
 
 use GeekBrains\LevelTwo\Blog\Exceptions\InvalidArgumentException;
-use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\LevelTwo\Blog\Exceptions\PostNotFoundException;
 use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\SqliteUsersRepository;
-use GeekBrains\LevelTwo\Blog\User;
 use GeekBrains\LevelTwo\Blog\Post;
 use GeekBrains\LevelTwo\Blog\UUID;
-use GeekBrains\LevelTwo\Person\Name;
 use \PDO;
 use \PDOStatement;
 
@@ -47,15 +44,6 @@ class SqlitePostRepository implements PostRepositoryInterface
 
         $statement->execute([':uuid' => (string)$uuid]);
 
-
-        // $result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        // // Бросаем исключение, если пользователь не найден
-        // if ($result === false) {
-        //     throw new UserNotFoundException(
-        //         "Cannot get user: $uuid"
-        //     );
-        // }
         return $this->getPost($statement, $uuid);
     }
 
@@ -72,7 +60,6 @@ class SqlitePostRepository implements PostRepositoryInterface
             );
         }
 
-        // print_r($result);
         $userRepository = new SqliteUsersRepository($this->connection);
         $user = $userRepository->get(new UUID($result['author_uuid']));
 
@@ -83,22 +70,4 @@ class SqlitePostRepository implements PostRepositoryInterface
             $result['text']
         );
     }
-
-    // /**
-    //  * @throws UserNotFoundException
-    //  * @throws InvalidArgumentException
-    //  */
-    // public function getByUsername(string $username): User
-    // {
-    //     $statement = $this->connection->prepare(
-    //         'SELECT * FROM users WHERE username = :username'
-    //     );
-    //     $statement->execute([
-    //         ':username' => $username,
-    //     ]);
-
-    //    return $this->getUser($statement, $username);
-    // }
-
-
 }

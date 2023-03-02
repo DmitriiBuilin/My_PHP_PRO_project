@@ -78,7 +78,7 @@ class Post
 
     public function __toString()
     {
-        return $this->user . ' пишет: ' . PHP_EOL . '-- ' . $this->title . ' --' . PHP_EOL . $this->text . PHP_EOL;
+        return $this->user->username() . ' пишет: ' . PHP_EOL . '-- ' . $this->title . ' --' . PHP_EOL . $this->text . PHP_EOL;
     }    
 
 
