@@ -3,7 +3,7 @@
         'name' => 'geekbrains/leveltwo',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '78121433bf026e197de52934354d5952969053c4',
+        'reference' => 'f7b3771e764cface4f76646fe2a499d182c94180',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'geekbrains/leveltwo' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '78121433bf026e197de52934354d5952969053c4',
+            'reference' => 'f7b3771e764cface4f76646fe2a499d182c94180',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -130,7 +130,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '2f3a048ff643e4aff8308eaeea738c82dfac0a81',
+            'reference' => '91fab0df509bae51a5e0c0d224f3e088cea08ea2',
             'type' => 'metapackage',
             'install_path' => NULL,
             'aliases' => array(
@@ -270,6 +270,15 @@
             'reference' => 'c51fa83a5d8f43f1402e3f32a005e6262244ef17',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sebastian/version',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
+        'squizlabs/php_codesniffer' => array(
+            'pretty_version' => '3.7.2',
+            'version' => '3.7.2.0',
+            'reference' => 'ed8e00df0a83aa96acf703f8c2979ff33341f879',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../squizlabs/php_codesniffer',
             'aliases' => array(),
             'dev_requirement' => true,
         ),
