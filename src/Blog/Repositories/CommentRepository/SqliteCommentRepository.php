@@ -54,9 +54,9 @@ class SqliteCommentRepository implements CommentRepositoryInterface
      * @throws CommentNotFoundException
      * @throws InvalidArgumentException
      */
-    private function getComment(\PDOStatement $statement, string $commentUuid): Comment
+    private function getComment(PDOStatement $statement, string $commentUuid): Comment
     {
-        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
         if ($result === false) {
             throw new CommentNotFoundException(
                 "Cannot find comment: $commentUuid"

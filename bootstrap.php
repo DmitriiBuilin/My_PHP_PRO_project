@@ -1,6 +1,8 @@
 <?php
 
 use GeekBrains\LevelTwo\Blog\Container\DIContainer;
+use GeekBrains\LevelTwo\Blog\Repositories\LikeRepository\LikeRepositoryInterface;
+use GeekBrains\LevelTwo\Blog\Repositories\LikeRepository\SqliteLikeRepository;
 use GeekBrains\LevelTwo\Blog\Repositories\PostRepository\PostRepositoryInterface;
 use GeekBrains\LevelTwo\Blog\Repositories\PostRepository\SqlitePostRepository;
 use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\SqliteUsersRepository;
@@ -30,6 +32,11 @@ $container->bind(
 $container->bind(
     CommentRepositoryInterface::class,
     SqliteCommentRepository::class
+);
+
+$container->bind(
+    LikeRepositoryInterface::class,
+    SqliteLikeRepository::class
 );
 
 return $container;

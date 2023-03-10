@@ -2,18 +2,17 @@
 
 
 use GeekBrains\LevelTwo\Blog\Exceptions\AppException;
-use GeekBrains\LevelTwo\Blog\Repositories\CommentRepository\SqliteCommentRepository;
-use GeekBrains\LevelTwo\Blog\Repositories\PostRepository\SqlitePostRepository;
-use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\SqliteUsersRepository;
+
 use GeekBrains\LevelTwo\Http\Actions\Comments\CreateComment;
 use GeekBrains\LevelTwo\Http\Actions\Comments\DeleteComment;
+use GeekBrains\LevelTwo\Http\Actions\Likes\CreateLike;
+use GeekBrains\LevelTwo\Http\Actions\Likes\ShowLikes;
 use GeekBrains\LevelTwo\Http\Actions\Posts\CreatePost;
 use GeekBrains\LevelTwo\Http\Actions\Posts\DeletePost;
 use GeekBrains\LevelTwo\Http\Actions\Users\CreateUser;
 use GeekBrains\LevelTwo\Http\Actions\Users\FindByUsername;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Http\Request;
-use GeekBrains\LevelTwo\Http\SuccessfulResponse;
 
 // require_once __DIR__ . '/vendor/autoload.php';   
 
@@ -29,11 +28,13 @@ $request = new Request(
 $routes = [
     'GET' => [
         '/users/show' => FindByUsername::class,
+        '/likes/show' => ShowLikes::class,
     ],
     'POST' => [
         '/users/create' => CreateUser::class,
         '/posts/create' => CreatePost::class,
         '/comments/create' => CreateComment::class,
+        '/likes/create' => CreateLike::class,
     ],
     'DELETE' => [
         '/posts' => DeletePost::class,
