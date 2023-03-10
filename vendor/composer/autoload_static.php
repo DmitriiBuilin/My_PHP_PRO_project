@@ -26,6 +26,7 @@ class ComposerStaticIniteff095f6b1bfcb5a8455beba8dac86a1
         'G' => 
         array (
             'GeekBrains\\LevelTwo\\' => 20,
+            'GeekBrains\\Blog\\UnitTests\\' => 26,
         ),
         'F' => 
         array (
@@ -53,6 +54,10 @@ class ComposerStaticIniteff095f6b1bfcb5a8455beba8dac86a1
         'GeekBrains\\LevelTwo\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'GeekBrains\\Blog\\UnitTests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'Faker\\' => 
         array (
