@@ -19,11 +19,10 @@ class SqlitePostRepository implements PostRepositoryInterface
         $this->connection = $connection;
     }
 
-
     public function save(Post $post): void
     {
         $statement = $this->connection->prepare(
-        'INSERT INTO posts (uuid, author_uuid, title, text) 
+            'INSERT INTO posts (uuid, author_uuid, title, text) 
             VALUES (:uuid, :author_uuid, :title, :text)'
         );
 
@@ -42,7 +41,9 @@ class SqlitePostRepository implements PostRepositoryInterface
             'SELECT * FROM posts WHERE uuid = :uuid'
         );
 
-        $statement->execute([':uuid' => (string)$uuid]);
+        $statement->execute([
+            ':uuid' => (string)$uuid,
+        ]);
 
         return $this->getPost($statement, $uuid);
     }
@@ -51,9 +52,9 @@ class SqlitePostRepository implements PostRepositoryInterface
      * @throws PostNotFoundException
      * @throws InvalidArgumentException
      */
-    private function getPost(\PDOStatement $statement, string $postUuid): Post
+    private function getPost(PDOStatement $statement, string $postUuid): Post
     {
-        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
         if ($result === false) {
             throw new PostNotFoundException(
                 "Cannot find post: $postUuid"
@@ -69,5 +70,16 @@ class SqlitePostRepository implements PostRepositoryInterface
             $result['title'],
             $result['text']
         );
+    }
+    
+    public function delete(UUID $uuid): void
+    {
+        $statement = $this->connection->prepare(
+            'DELETE FROM posts WHERE posts.uuid=:uuid;'
+        );
+
+        $statement->execute([
+            ':uuid' => $uuid,
+        ]);
     }
 }

@@ -5,6 +5,11 @@
             "GeekBrains\\LevelTwo\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "GeekBrains\\Blog\\UnitTests": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Ember",

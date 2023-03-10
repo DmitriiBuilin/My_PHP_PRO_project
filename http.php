@@ -2,7 +2,13 @@
 
 
 use GeekBrains\LevelTwo\Blog\Exceptions\AppException;
+use GeekBrains\LevelTwo\Blog\Repositories\CommentRepository\SqliteCommentRepository;
+use GeekBrains\LevelTwo\Blog\Repositories\PostRepository\SqlitePostRepository;
 use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\SqliteUsersRepository;
+use GeekBrains\LevelTwo\Http\Actions\Comments\CreateComment;
+use GeekBrains\LevelTwo\Http\Actions\Comments\DeleteComment;
+use GeekBrains\LevelTwo\Http\Actions\Posts\CreatePost;
+use GeekBrains\LevelTwo\Http\Actions\Posts\DeletePost;
 use GeekBrains\LevelTwo\Http\Actions\Users\CreateUser;
 use GeekBrains\LevelTwo\Http\Actions\Users\FindByUsername;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
@@ -11,7 +17,12 @@ use GeekBrains\LevelTwo\Http\SuccessfulResponse;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$request = new Request($_GET, $_SERVER, file_get_contents('php://input'),);
+$request = new Request(
+    $_GET, 
+    $_SERVER, 
+    file_get_contents('php://input'),
+);
+
 
 $routes = [
     'GET' => [
@@ -20,15 +31,46 @@ $routes = [
                 new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
             )
         ),
+        
     ],
-    'POST' => [
+    'POST' => [ 
         '/users/create' => new CreateUser(
             new SqliteUsersRepository(
                 new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
             )
         ),
+        '/posts/create' => new CreatePost(
+            new SqliteUsersRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            ),
+            new SqlitePostRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            )
+        ),
+        '/comments/create' => new CreateComment(
+            new SqliteUsersRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            ),
+            new SqlitePostRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            ),
+            new SqliteCommentRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            )
+        )
     ],
-
+    'DELETE' => [ 
+        '/posts' => new DeletePost(
+            new SqlitePostRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            )
+        ),
+        '/comments' => new DeleteComment(
+            new SqliteCommentRepository(
+                new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+            )
+        )
+    ],
 ];
 
 
