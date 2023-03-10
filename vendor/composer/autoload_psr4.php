@@ -10,6 +10,7 @@ return array(
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'GeekBrains\\LevelTwo\\' => array($baseDir . '/src'),
+    'GeekBrains\\Blog\\UnitTests\\' => array($baseDir . '/tests'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );
