@@ -3,6 +3,7 @@
 namespace GeekBrains\LevelTwo\Http\Actions\Likes;
 
 use GeekBrains\LevelTwo\Blog\Exceptions\InvalidArgumentException;
+use GeekBrains\LevelTwo\Blog\Exceptions\LikeAlreadyExist;
 use GeekBrains\LevelTwo\Blog\Exceptions\PostNotFoundException;
 use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\LevelTwo\Blog\Like;
@@ -53,6 +54,12 @@ class CreateLike implements ActionInterface
             return new ErrorResponse($exception->getMessage());
         }
 
+        // try {
+        //     $this->likeRepository->checkUserLikeForPostExists($postUuid, $authorUuid);
+        // } catch (LikeAlreadyExist $e) {
+        //     return new ErrorResponse($e->getMessage());
+        // }
+        
         $newLikeUuid = UUID::random();
         
         try {
