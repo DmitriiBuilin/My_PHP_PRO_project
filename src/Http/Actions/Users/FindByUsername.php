@@ -21,8 +21,6 @@ class FindByUsername implements ActionInterface
     {
     }
 
-
-
     public function handle(Request $request): Response
     {
         try {

@@ -7,7 +7,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "GeekBrains\\Blog\\UnitTests": "tests/"
+            "GeekBrains\\Blog\\UnitTests\\": "tests/"
         }
     },
     "authors": [
