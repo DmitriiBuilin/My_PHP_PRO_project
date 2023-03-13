@@ -17,13 +17,15 @@ use GeekBrains\LevelTwo\http\ErrorResponse;
 use GeekBrains\LevelTwo\http\Request;
 use GeekBrains\LevelTwo\http\Response;
 use GeekBrains\LevelTwo\http\SuccessfulResponse;
+use Psr\Log\LoggerInterface;
 
 class CreateComment implements ActionInterface
 {
     public function __construct(
         private UsersRepositoryInterface $usersRepository,
         private PostRepositoryInterface $postsRepository,
-        private CommentRepositoryInterface $commentsRepository
+        private CommentRepositoryInterface $commentsRepository,
+        private LoggerInterface $logger,
     )
     {
     }
@@ -68,6 +70,7 @@ class CreateComment implements ActionInterface
         }
 
         $this->commentsRepository->save($comment);
+        $this->logger->info("Comment created: $newCommentUuid");
 
         return new SuccessfulResponse([
             'uuid' => (string)$newCommentUuid,

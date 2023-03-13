@@ -4,3 +4,7 @@ vendor/
 
 /app.php
 /exeptions.php
+
+.phpunit.result.cache
+coverage_report/
+.env

@@ -13,6 +13,7 @@ use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Http\Request;
 use GeekBrains\LevelTwo\Http\Response;
 use GeekBrains\LevelTwo\Http\SuccessfulResponse;
+use Psr\Log\LoggerInterface;
 
 
 /**
@@ -27,7 +28,8 @@ class ShowLikes implements ActionInterface
      */
     public function __construct(
         private PostRepositoryInterface $postsRepository,
-        private LikeRepositoryInterface $likeRepository
+        private LikeRepositoryInterface $likeRepository,
+        private LoggerInterface $logger,
     )
     {
     }
@@ -39,9 +41,13 @@ class ShowLikes implements ActionInterface
   */
 	public function handle(Request $request): Response 
     {
+        $container = require 'bootstrap.php';
+        $logger = $container->get(LoggerInterface::class);
+
         try {
             $postUuid = new UUID($request->query('post_uuid'));
         } catch (HttpException| InvalidArgumentException $exception) {
+            $logger->warning($exception->getMessage());
             return new ErrorResponse($exception->getMessage());
         }
 
@@ -54,6 +60,7 @@ class ShowLikes implements ActionInterface
         try {
             $like = $this->likeRepository->getByPostUuid($postUuid);
         } catch (LikeNotFoundException $exception) {
+            $logger->warning($exception->getMessage());
             return new ErrorResponse($exception->getMessage());
         }
 

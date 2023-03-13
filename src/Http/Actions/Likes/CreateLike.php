@@ -3,6 +3,7 @@
 namespace GeekBrains\LevelTwo\Http\Actions\Likes;
 
 use GeekBrains\LevelTwo\Blog\Exceptions\InvalidArgumentException;
+use GeekBrains\LevelTwo\Blog\Exceptions\LikeAlreadyExist;
 use GeekBrains\LevelTwo\Blog\Exceptions\PostNotFoundException;
 use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\LevelTwo\Blog\Like;
@@ -16,13 +17,15 @@ use GeekBrains\LevelTwo\http\ErrorResponse;
 use GeekBrains\LevelTwo\http\Request;
 use GeekBrains\LevelTwo\http\Response;
 use GeekBrains\LevelTwo\http\SuccessfulResponse;
+use Psr\Log\LoggerInterface;
 
 class CreateLike implements ActionInterface
 {
     public function __construct(
         private UsersRepositoryInterface $usersRepository,
         private PostRepositoryInterface $postsRepository,
-        private LikeRepositoryInterface $likeRepository
+        private LikeRepositoryInterface $likeRepository,
+        private LoggerInterface $logger,
     )
     {
     }
@@ -53,6 +56,12 @@ class CreateLike implements ActionInterface
             return new ErrorResponse($exception->getMessage());
         }
 
+        // try {
+        //     $this->likeRepository->checkUserLikeForPostExists($postUuid, $authorUuid);
+        // } catch (LikeAlreadyExist $e) {
+        //     return new ErrorResponse($e->getMessage());
+        // }
+        
         $newLikeUuid = UUID::random();
         
         try {
@@ -66,6 +75,7 @@ class CreateLike implements ActionInterface
         }
 
         $this->likeRepository->save($like);
+        $this->logger->info("Like created: $newLikeUuid");
 
         return new SuccessfulResponse([
             'uuid' => (string)$newLikeUuid,
