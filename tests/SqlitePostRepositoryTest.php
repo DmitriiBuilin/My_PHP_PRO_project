@@ -67,18 +67,21 @@ class SqlitePostRepositoryTest extends TestCase
 
     public function testItGetPostByUuid(): void
     {
-        $connectionStub = $this->createStub(\PDO::class);
-        $statementMock = $this->createMock(\PDOStatement::class);
+        $connectionStub = $this->createStub(PDO::class);
+        $statementMock = $this->createMock(PDOStatement::class);
 
-        $statementMock
-        ->expects($this->once()) 
-        ->method('execute') 
-        ->with([ 
+        $statementMock->method('fetch')->willReturn([ 
             ':uuid' => '9dba7ab0-93be-4ff4-9699-165320c97694',
             ':author_uuid' => '123e4567-e89b-12d3-a456-426614174000',
             ':title' => 'Title',
             ':text' => 'Text',
+            ':username' => 'ivan123',
+            ':first_name' => 'Ivan',
+            ':last_name' => 'Nikitin',
         ]);
+
+        
+
         $connectionStub->method('prepare')->willReturn($statementMock);
 
         $postRepository = new SqlitePostRepository($connectionStub);

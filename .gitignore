@@ -1,3 +1,6 @@
+vendor/
+
 /vendor
+
 /app.php
 /exeptions.php

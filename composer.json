@@ -5,6 +5,11 @@
             "GeekBrains\\LevelTwo\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "GeekBrains\\Blog\\UnitTests": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Ember",
@@ -19,6 +24,7 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "squizlabs/php_codesniffer": "3.*"
     }
 }
