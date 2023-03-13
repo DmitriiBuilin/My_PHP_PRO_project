@@ -10,26 +10,33 @@ use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Http\SuccessfulResponse;
 use GeekBrains\LevelTwo\http\Request;
 use GeekBrains\LevelTwo\http\Response;
+use Psr\Log\LoggerInterface;
 
 class DeleteComment implements ActionInterface
 {
     public function __construct(
-        private CommentRepositoryInterface $commentsRepository
+        private CommentRepositoryInterface $commentsRepository,
+        private LoggerInterface $logger,
     )
     {
     }
 
     public function handle(Request $request): Response
     {
+        $container = require 'bootstrap.php';
+        $logger = $container->get(LoggerInterface::class);
+
         try {
             $commentUuid = $request->query('uuid');
             $this->commentsRepository->get(new UUID($commentUuid));
 
         } catch (CommentsNotFoundException $error) {
+            $logger->warning($error->getMessage());
             return new ErrorResponse($error->getMessage());
         }
 
         $this->commentsRepository->delete(new UUID($commentUuid));
+        $logger->info("Comment deleted: $commentUuid");
 
         return new SuccessfulResponse([
             'uuid' => $commentUuid,

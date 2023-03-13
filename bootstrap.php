@@ -9,14 +9,53 @@ use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\SqliteUsersRepository;
 use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\UsersRepositoryInterface;
 use GeekBrains\LevelTwo\Blog\Repositories\CommentRepository\SqliteCommentRepository;
 use GeekBrains\LevelTwo\Blog\Repositories\CommentRepository\CommentRepositoryInterface;
+use GeekBrains\LevelTwo\Http\Auth\IdentificationInterface;
+use GeekBrains\LevelTwo\Http\Auth\JsonBodyUsernameIdentification;
+use GeekBrains\LevelTwo\Http\Auth\JsonBodyUuidIdentification;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use Dotenv\Dotenv;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $container = new DIContainer();
 
+Dotenv::createImmutable(__DIR__)->safeLoad();
+
 $container->bind(
     PDO::class,
     new PDO('sqlite:' . __DIR__ . '/blog.sqlite')
+);
+
+$logger = (new Logger('blog'));
+
+if ('yes' === $_ENV['LOG_TO_FILES']) {
+    $logger
+    ->pushHandler(new StreamHandler(
+        __DIR__ . '/logs/blog.log'
+    ))
+    ->pushHandler(new StreamHandler(
+        __DIR__ . '/logs/blog.error.log',
+        level: Logger::ERROR,
+        bubble: false,
+    ));
+}
+
+if ('yes' === $_ENV['LOG_TO_CONSOLE']) {
+    $logger->pushHandler(
+        new StreamHandler("php://stdout")
+    );
+}
+
+$container->bind(
+    IdentificationInterface::class,
+    JsonBodyUsernameIdentification::class
+);
+
+$container->bind(
+    LoggerInterface::class,
+    $logger
 );
 
 $container->bind(

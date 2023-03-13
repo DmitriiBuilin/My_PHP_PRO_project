@@ -14,14 +14,19 @@ use GeekBrains\LevelTwo\http\ErrorResponse;
 use GeekBrains\LevelTwo\http\Request;
 use GeekBrains\LevelTwo\http\Response;
 use GeekBrains\LevelTwo\http\SuccessfulResponse;
+use GeekBrains\LevelTwo\Http\Auth\IdentificationInterface;
+use GeekBrains\LevelTwo\Http\Auth\JsonBodyUsernameIdentification;
+use Psr\Log\LoggerInterface;
 
 
 class CreatePost implements ActionInterface
 {
 
     public function __construct(
-        private UsersRepositoryInterface $usersRepository,
-        private PostRepositoryInterface $postsRepository
+        private UsersRepositoryInterface $usersRepository,        
+        private PostRepositoryInterface $postsRepository,
+        private LoggerInterface $logger,
+        // private IdentificationInterface $identification,
     )
     {
     }
@@ -39,6 +44,7 @@ class CreatePost implements ActionInterface
         } catch (UserNotFoundException $exception) {
             return new ErrorResponse($exception->getMessage());
         }
+        // $user = $this->identification->user($request);
 
         $newPostUuid = UUID::random();
 
@@ -54,6 +60,7 @@ class CreatePost implements ActionInterface
         }
 
         $this->postsRepository->save($post);
+        $this->logger->info("Post created: $newPostUuid");
 
         return new SuccessfulResponse([
             'uuid' => (string)$newPostUuid,
