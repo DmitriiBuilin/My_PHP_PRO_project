@@ -2,7 +2,6 @@
 
 namespace Actions;
 
-
 use GeekBrains\Blog\UnitTests\DummyLogger;
 use GeekBrains\LevelTwo\Http\Auth\IdentificationInterface;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
