@@ -3,6 +3,7 @@
 namespace GeekBrains\LevelTwo\Http\Actions\Comments;
 
 use GeekBrains\LevelTwo\Blog\Comment;
+use GeekBrains\LevelTwo\Blog\Exceptions\AuthException;
 use GeekBrains\LevelTwo\Blog\Exceptions\InvalidArgumentException;
 use GeekBrains\LevelTwo\Blog\Exceptions\PostNotFoundException;
 use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
@@ -13,6 +14,7 @@ use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\UsersRepositoryInterfa
 use GeekBrains\LevelTwo\Blog\UUID;
 use GeekBrains\LevelTwo\Blog\Exceptions\HttpException;
 use GeekBrains\LevelTwo\http\Actions\ActionInterface;
+use GeekBrains\LevelTwo\Http\Auth\TokenAuthenticationInterface;
 use GeekBrains\LevelTwo\http\ErrorResponse;
 use GeekBrains\LevelTwo\http\Request;
 use GeekBrains\LevelTwo\http\Response;
@@ -22,37 +24,49 @@ use Psr\Log\LoggerInterface;
 class CreateComment implements ActionInterface
 {
     public function __construct(
-        private UsersRepositoryInterface $usersRepository,
+        // private UsersRepositoryInterface $usersRepository,
         private PostRepositoryInterface $postsRepository,
         private CommentRepositoryInterface $commentsRepository,
         private LoggerInterface $logger,
+        private TokenAuthenticationInterface $authentication,
     )
     {
     }
 
     public function handle(Request $request): Response
     {
-        try {
-            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
-        } catch (HttpException| InvalidArgumentException $exception) {
-            return new ErrorResponse($exception->getMessage());
-        }
+        // try {
+        //     $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
+        // } catch (HttpException| InvalidArgumentException $exception) {
+        //     return new ErrorResponse($exception->getMessage());
+        // }
+
+        // try {
+        //     $user = $this->usersRepository->get($authorUuid);
+        // } catch (UserNotFoundException $exception) {
+        //     return new ErrorResponse($exception->getMessage());
+        // }
+        $container = require 'bootstrap.php';
+        $logger = $container->get(LoggerInterface::class);
 
         try {
-            $user = $this->usersRepository->get($authorUuid);
-        } catch (UserNotFoundException $exception) {
-            return new ErrorResponse($exception->getMessage());
+            $user = $this->authentication->user($request);
+        } catch (AuthException $e) {
+            $logger->warning($e->getMessage());
+            return new ErrorResponse($e->getMessage());
         }
 
         try {
             $postUuid = new UUID($request->jsonBodyField('post_uuid'));
         } catch (HttpException| InvalidArgumentException $exception) {
+            $logger->warning($e->getMessage());
             return new ErrorResponse($exception->getMessage());
         }
 
         try {
             $post = $this->postsRepository->get($postUuid);
         } catch (PostNotFoundException $exception) {
+            $logger->warning($e->getMessage());
             return new ErrorResponse($exception->getMessage());
         }
 

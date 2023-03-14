@@ -50,9 +50,13 @@ class CreatePost implements ActionInterface
         // }
         // $user = $this->identification->user($request);
 
+        $container = require 'bootstrap.php';
+        $logger = $container->get(LoggerInterface::class);
+
         try {
             $user = $this->authentication->user($request);
         } catch (AuthException $e) {
+            $logger->warning($e->getMessage());
             return new ErrorResponse($e->getMessage());
         }
 
