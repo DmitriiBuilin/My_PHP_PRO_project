@@ -24,13 +24,11 @@ class SqliteUsersRepository implements UsersRepositoryInterface
     {
         // Подготавливаем запрос
         $statement = $this->connection->prepare(
-            'INSERT INTO users (uuid, username, first_name, last_name) 
-            VALUES (:uuid, :username, :first_name, :last_name)
+            'INSERT INTO users (uuid, username, first_name, last_name, password) 
+            VALUES (:uuid, :username, :first_name, :last_name, :password)
             ON CONFLICT (uuid) DO UPDATE SET
             first_name = :first_name,
-            last_name = :last_name'
-            
-
+            last_name = :last_name'  
         );
         // Выполняем запрос с конкретными значениями
         $statement->execute([
@@ -38,6 +36,7 @@ class SqliteUsersRepository implements UsersRepositoryInterface
             ':username' => $user->username(),
             ':first_name' => $user->name()->first(),
             ':last_name' => $user->name()->last(),
+            ':password' => $user->hashedPassword(),
         ]);
 
     }
@@ -55,14 +54,7 @@ class SqliteUsersRepository implements UsersRepositoryInterface
         );
 
         $statement->execute([(string)$uuid]);
-        // $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        // // Бросаем исключение, если пользователь не найден
-        // if ($result === false) {
-        //     throw new UserNotFoundException(
-        //         "Cannot get user: $uuid"
-        //     );
-        // }
         return $this->getUser($statement, $uuid);
     }
 
@@ -99,6 +91,7 @@ class SqliteUsersRepository implements UsersRepositoryInterface
             new UUID($result['uuid']),
             new Name($result['first_name'], $result['last_name']),
             $result['username'],
+            $result['password'],
         );
     }
 }

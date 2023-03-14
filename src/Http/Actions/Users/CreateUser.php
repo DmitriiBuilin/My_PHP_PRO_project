@@ -33,8 +33,9 @@ class CreateUser implements ActionInterface
                     $request->jsonBodyField('first_name'),
                     $request->jsonBodyField('last_name')
                 ),
-                $request->jsonBodyField('username')
-            );
+                $request->jsonBodyField('username'),
+                $request->jsonBodyField('password')
+            );            
 
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());

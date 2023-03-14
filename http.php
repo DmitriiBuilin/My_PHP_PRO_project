@@ -2,7 +2,6 @@
 
 
 use GeekBrains\LevelTwo\Blog\Exceptions\AppException;
-
 use GeekBrains\LevelTwo\Blog\Exceptions\HttpException;
 use GeekBrains\LevelTwo\Http\Actions\Comments\CreateComment;
 use GeekBrains\LevelTwo\Http\Actions\Comments\DeleteComment;
@@ -15,6 +14,7 @@ use GeekBrains\LevelTwo\Http\Actions\Users\FindByUsername;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Http\Request;
 use Psr\Log\LoggerInterface;
+use GeekBrains\LevelTwo\Http\Actions\Auth\LogIn;
 
 // require_once __DIR__ . '/vendor/autoload.php';   
 
@@ -34,6 +34,7 @@ $routes = [
         '/likes/show' => ShowLikes::class,
     ],
     'POST' => [
+        '/login' => LogIn::class,
         '/users/create' => CreateUser::class,
         '/posts/create' => CreatePost::class,
         '/comments/create' => CreateComment::class,
@@ -80,5 +81,6 @@ try {
 } catch (AppException $e) {
     $logger->error($e->getMessage(), ['exception' => $e]);
     (new ErrorResponse($e->getMessage()))->send();
+    return;
 }
-$response->send();
+

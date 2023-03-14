@@ -41,18 +41,17 @@ class DIContainer implements ContainerInterface
         $constructor = $reflectionClass->getConstructor();
 
         // Если конструктора нет -
-// просто создаём объект нужного класса
+        // просто создаём объект нужного класса
         if (null === $constructor) {
             return new $type();
         }
 
-
-            // В этот массив мы будем собирать
-    // объекты зависимостей класса
+        // В этот массив мы будем собирать
+        // объекты зависимостей класса
         $parameters = [];
+
         // Проходим по всем параметрам конструктора
         // (зависимостям класса)
-
         foreach ($constructor->getParameters() as $parameter) {
         // Узнаем тип параметра конструктора
         // (тип зависимости)

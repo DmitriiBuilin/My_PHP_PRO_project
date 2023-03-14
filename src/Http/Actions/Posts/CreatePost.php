@@ -2,6 +2,7 @@
 
 namespace GeekBrains\LevelTwo\Http\Actions\Posts;
 
+use GeekBrains\LevelTwo\Blog\Exceptions\AuthException;
 use GeekBrains\LevelTwo\Blog\Exceptions\InvalidArgumentException;
 use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\LevelTwo\Blog\Post;
@@ -17,15 +18,18 @@ use GeekBrains\LevelTwo\http\SuccessfulResponse;
 use GeekBrains\LevelTwo\Http\Auth\IdentificationInterface;
 use GeekBrains\LevelTwo\Http\Auth\JsonBodyUsernameIdentification;
 use Psr\Log\LoggerInterface;
+use GeekBrains\LevelTwo\Http\Auth\AuthenticationInterface;
+use GeekBrains\LevelTwo\Http\Auth\TokenAuthenticationInterface;
 
 
 class CreatePost implements ActionInterface
 {
 
     public function __construct(
-        private UsersRepositoryInterface $usersRepository,        
+        // private UsersRepositoryInterface $usersRepository,        
         private PostRepositoryInterface $postsRepository,
         private LoggerInterface $logger,
+        private TokenAuthenticationInterface $authentication,
         // private IdentificationInterface $identification,
     )
     {
@@ -33,18 +37,24 @@ class CreatePost implements ActionInterface
 
     public function handle(Request $request): Response
     {
-        try {
-            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
-        } catch (HttpException| InvalidArgumentException $exception) {
-            return new ErrorResponse($exception->getMessage());
-        }
+        // try {
+        //     $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
+        // } catch (HttpException| InvalidArgumentException $exception) {
+        //     return new ErrorResponse($exception->getMessage());
+        // }
+
+        // try {
+        //     $user = $this->usersRepository->get($authorUuid);
+        // } catch (UserNotFoundException $exception) {
+        //     return new ErrorResponse($exception->getMessage());
+        // }
+        // $user = $this->identification->user($request);
 
         try {
-            $user = $this->usersRepository->get($authorUuid);
-        } catch (UserNotFoundException $exception) {
-            return new ErrorResponse($exception->getMessage());
+            $user = $this->authentication->user($request);
+        } catch (AuthException $e) {
+            return new ErrorResponse($e->getMessage());
         }
-        // $user = $this->identification->user($request);
 
         $newPostUuid = UUID::random();
 
