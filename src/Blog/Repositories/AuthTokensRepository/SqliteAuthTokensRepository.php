@@ -63,7 +63,7 @@ SQL;
             );
             $statement->execute([$token]);
 
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
             throw new AuthTokensRepositoryException(
