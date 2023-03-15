@@ -50,7 +50,6 @@ class FindByUsername implements ActionInterface
             return new ErrorResponse($e->getMessage());
         }
 
-
     // Возвращаем успешный ответ
         return new SuccessfulResponse([
             'username' => $user->username(),
