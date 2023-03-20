@@ -3,7 +3,7 @@
         'name' => 'geekbrains/leveltwo',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6310104afff52da9e797e6f388f71e1f3110bf2a',
+        'reference' => 'd61e96cf04dd14d2ce3aef04e75c565d0d4cb9cb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'geekbrains/leveltwo' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6310104afff52da9e797e6f388f71e1f3110bf2a',
+            'reference' => 'd61e96cf04dd14d2ce3aef04e75c565d0d4cb9cb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

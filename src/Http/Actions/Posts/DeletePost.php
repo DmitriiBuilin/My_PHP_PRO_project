@@ -2,10 +2,12 @@
 
 namespace GeekBrains\LevelTwo\Http\Actions\Posts;
 
+use GeekBrains\LevelTwo\Blog\Exceptions\AuthException;
 use GeekBrains\LevelTwo\Blog\Exceptions\PostNotFoundException;
 use GeekBrains\LevelTwo\Blog\Repositories\PostRepository\PostRepositoryInterface;
 use GeekBrains\LevelTwo\Blog\UUID;
 use GeekBrains\LevelTwo\Http\Actions\ActionInterface;
+use GeekBrains\LevelTwo\Http\Auth\TokenAuthenticationInterface;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Http\SuccessfulResponse;
 use GeekBrains\LevelTwo\http\Request;
@@ -17,6 +19,7 @@ class DeletePost implements ActionInterface
     public function __construct(
         private PostRepositoryInterface $postsRepository,
         private LoggerInterface $logger,
+        private TokenAuthenticationInterface $authentication,
     )
     {
     }
@@ -34,6 +37,13 @@ class DeletePost implements ActionInterface
         } catch (PostNotFoundException $error) {
             $logger->warning($error->getMessage());
             return new ErrorResponse($error->getMessage());
+        }
+
+        try {
+            $user = $this->authentication->user($request);
+        } catch (AuthException $e) {
+            $logger->warning($e->getMessage());
+            return new ErrorResponse($e->getMessage());
         }
 
         $this->postsRepository->delete(new UUID($postUuid));
