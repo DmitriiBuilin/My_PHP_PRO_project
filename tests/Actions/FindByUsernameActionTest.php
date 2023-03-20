@@ -2,6 +2,7 @@
 
 namespace Actions;
 
+use GeekBrains\Blog\UnitTests\DummyLogger;
 use GeekBrains\LevelTwo\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\LevelTwo\Blog\Repositories\UsersRepository\UsersRepositoryInterface;
 use GeekBrains\LevelTwo\Blog\User;
@@ -34,7 +35,7 @@ class FindByUsernameActionTest extends TestCase
         // Создаём стаб репозитория пользователей
         $usersRepository = $this->usersRepository([]);
 
-        $action = new FindByUsername($usersRepository);
+        $action = new FindByUsername($usersRepository, new DummyLogger());
         $response = $action->handle($request);
         $this->assertInstanceOf(ErrorResponse::class, $response);
         $this->expectOutputString('{"success":false,"reason":"No such query param in the request: username"}');
@@ -50,7 +51,7 @@ class FindByUsernameActionTest extends TestCase
         $request = new Request(['username' => 'ivan'], [], '');
 // Репозиторий пользователей по-прежнему пуст
         $usersRepository = $this->usersRepository([]);
-        $action = new FindByUsername($usersRepository);
+        $action = new FindByUsername($usersRepository, new DummyLogger());
         $response = $action->handle($request);
         $this->assertInstanceOf(ErrorResponse::class, $response);
         $this->expectOutputString('{"success":false,"reason":"Not found"}');
@@ -76,7 +77,7 @@ class FindByUsernameActionTest extends TestCase
 
             ),
         ]);
-        $action = new FindByUsername($usersRepository);
+        $action = new FindByUsername($usersRepository, new DummyLogger());
         $response = $action->handle($request);
 // Проверяем, что ответ - удачный
         $this->assertInstanceOf(SuccessfulResponse::class, $response);

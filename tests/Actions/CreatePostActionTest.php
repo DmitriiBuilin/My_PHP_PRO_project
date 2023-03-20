@@ -2,7 +2,8 @@
 
 namespace Actions;
 
-
+use GeekBrains\Blog\UnitTests\DummyLogger;
+use GeekBrains\LevelTwo\Http\Auth\IdentificationInterface;
 use GeekBrains\LevelTwo\Http\ErrorResponse;
 use GeekBrains\LevelTwo\Blog\Exceptions\JsonException;
 use GeekBrains\LevelTwo\Http\Actions\Posts\CreatePost;
@@ -104,7 +105,7 @@ class CreatePostActionTest extends TestCase
             ),
         ]);
 
-        $action = new CreatePost($usersRepository, $postsRepository);
+        $action = new CreatePost($usersRepository, $postsRepository, new DummyLogger());
 
         $response = $action->handle($request);
 
@@ -141,7 +142,7 @@ class CreatePostActionTest extends TestCase
         $postsRepository = $this->postsRepository();
         $usersRepository = $this->usersRepository([]);
 
-        $action = new CreatePost($usersRepository, $postsRepository);
+        $action = new CreatePost($usersRepository, $postsRepository, new DummyLogger());
 
         $response = $action->handle($request);
 
@@ -168,7 +169,7 @@ class CreatePostActionTest extends TestCase
             ),
         ]);
 
-        $action = new CreatePost($usersRepository, $postsRepository);
+        $action = new CreatePost($usersRepository, $postsRepository, new DummyLogger());
 
         $response = $action->handle($request);
 
