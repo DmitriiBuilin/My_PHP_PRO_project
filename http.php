@@ -1,6 +1,5 @@
 <?php
 
-
 use GeekBrains\LevelTwo\Blog\Exceptions\AppException;
 use GeekBrains\LevelTwo\Blog\Exceptions\HttpException;
 use GeekBrains\LevelTwo\Http\Actions\Comments\CreateComment;
@@ -16,8 +15,6 @@ use GeekBrains\LevelTwo\Http\Request;
 use Psr\Log\LoggerInterface;
 use GeekBrains\LevelTwo\Http\Actions\Auth\LogIn;
 use GeekBrains\LevelTwo\Http\Actions\Auth\LogOut;
-
-// require_once __DIR__ . '/vendor/autoload.php';   
 
 $container = require __DIR__ . '/bootstrap.php';
 
@@ -66,12 +63,11 @@ try {
 }
 
 if (!array_key_exists($method, $routes) || !array_key_exists($path, $routes[$method])) {
-    // Логируем сообщение с уровнем NOTICE
-        $message = "Route not found: $method $path";
-        $logger->notice($message);
-        (new ErrorResponse($message))->send();
-        return;
-    }
+    $message = "Route not found: $method $path";
+    $logger->notice($message);
+    (new ErrorResponse($message))->send();
+    return;
+}
 
 $actionClassName = $routes[$method][$path];
 

@@ -12,7 +12,7 @@ use GeekBrains\LevelTwo\Blog\UUID;
 use GeekBrains\LevelTwo\Person\Name;
 use Psr\Log\LoggerInterface;
 
-//php cli.php username=ivan first_name=Ivan last_name=Nikitin
+//php cli.php username=ivan first_name=Ivan last_name=Nikitin password=123
 
 class CreateUserCommand
 {
